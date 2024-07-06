@@ -1,0 +1,36 @@
+import java.util.Arrays;
+
+public class rotateAndShift {
+	public static void main(String[] args) {
+		int[] k = new int[]{0, 2, 3};
+		
+		rotateAndShift(5, k, 4);
+		
+	}
+	
+	public static void rotateAndShift(int n, int k[], int t){
+	        //creates a integer array filled with cows at starting positions
+	        int[] pos = new int[n];
+	        for(int i = 0; i < n; i++){
+	            pos[i] = i;
+	        }
+	        System.out.println(Arrays.toString(pos));
+	        for(int i = 1; i <= t; i++){
+	            int[] temp = Arrays.copyOf(pos, n);
+	            for(int j = 0;  j < k.length; j++){
+	                if(j == k.length - 1){
+	                    pos[k[0]] = temp[k[j]];
+	                    k[j] = 0;
+	                }else{
+	                    pos[k[j+1]] = temp[k[j]];
+	                    k[j] =+ 1;
+	                }
+	            }
+	            System.out.println(Arrays.toString(pos));
+	        }
+	        
+	        //prints out the result of the moved positions of the cows 
+	        
+	}
+	
+}
