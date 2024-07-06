@@ -1,0 +1,64 @@
+
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader("speeding.in"));
+        // input file name goes above
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("speeding.out")));
+		StringTokenizer s = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(s.nextToken());
+		int m = Integer.parseInt(s.nextToken());
+		int[] roadLength = new int[n];
+		int[] roadSpeed = new int[n];
+		int[] cowRoadLength = new int[m];
+		int[] cowSpeed = new int[m];
+		
+		
+		s = new StringTokenizer(br.readLine());
+		for(int i = 0; i < n; i++) {
+			roadLength[i] = Integer.parseInt(s.nextToken());
+			roadSpeed[i] = Integer.parseInt(s.nextToken());
+			s = new StringTokenizer(br.readLine());
+		}
+		String line;
+		for(int i = 0; i < m; i++) {
+			cowRoadLength[i] = Integer.parseInt(s.nextToken());
+			cowSpeed[i] = Integer.parseInt(s.nextToken());
+			if((line = br.readLine()) != null) {
+				s = new StringTokenizer(line);
+			}
+		}
+		int max = 0;
+		int distance = cowRoadLength[0];
+		int speedDiff;
+		for(int i = 0; i < m; i++) {
+			speedDiff = findSpeed(distance, roadLength, roadSpeed) - cowSpeed[i];
+			if(speedDiff < 0 && Math.abs(speedDiff) > max) {
+				max = Math.abs(speedDiff);
+			}else if(i < m-1){
+				distance += cowRoadLength[i + 1];
+			}
+		}
+		System.out.print(max);
+		out.print(max);
+		out.close();
+		
+		
+		
+		
+		
+		
+	}
+	
+	public static int findSpeed(int distance, int[] roadLength, int[] roadSpeed) {
+		int speed = 0;
+		int currentRoadLength = roadLength[0];
+		for(int i = 0; i < roadLength.length;i++){
+			if(distance <= currentRoadLength) {
+				speed = i;
+				break;
+			}else {
+				currentRoadLength += roadLength[i + 1];
+			}
+		}
+		return roadSpeed[speed];
+	}
+	
