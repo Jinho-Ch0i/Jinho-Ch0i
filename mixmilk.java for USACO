@@ -1,0 +1,60 @@
+/*
+ID: ch0ijin1
+LANG: JAVA
+PROG: shell
+*/
+import java.io.*;
+import java.util.*;
+public class mixmilk {
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader("mixmilk.in"));
+        // input file name goes above
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("mixmilk.out")));
+		StringTokenizer s = new StringTokenizer(br.readLine());
+		int[] milkCapacity = new int[3];
+		int[] milkAmount = new int[3];
+		
+		milkCapacity[0] = Integer.parseInt(s.nextToken());
+		milkAmount[0] = Integer.parseInt(s.nextToken());
+		s = new StringTokenizer(br.readLine());
+		milkCapacity[1] = Integer.parseInt(s.nextToken());
+		milkAmount[1] = Integer.parseInt(s.nextToken());
+		s = new StringTokenizer(br.readLine());
+		milkCapacity[2] = Integer.parseInt(s.nextToken());
+		milkAmount[2] = Integer.parseInt(s.nextToken());
+		
+		for(int i = 1; i <= 100; i++) {
+			if(i%3 == 1) {
+				milkAmount[1] = milkAmount[1] + milkAmount[0];
+				milkAmount[0] = 0;
+				if(milkAmount[1] > milkCapacity[1]) {
+					milkAmount[0] = milkAmount[1] - milkCapacity[1];
+					milkAmount[1] = milkCapacity[1];
+				}
+			}else if(i%3 == 2) {
+				milkAmount[2] = milkAmount[2] + milkAmount[1];
+				milkAmount[1] = 0;
+				if(milkAmount[2] > milkCapacity[2]) {
+					milkAmount[1] = milkAmount[2] - milkCapacity[2];
+					milkAmount[2] = milkCapacity[2];
+				}
+			}else {
+				milkAmount[0] = milkAmount[0] + milkAmount[2];
+				milkAmount[2] = 0;
+				if(milkAmount[0] > milkCapacity[0]) {
+					milkAmount[2] = milkAmount[0] - milkCapacity[0];
+					milkAmount[0] = milkCapacity[0];
+				}
+			}
+		}
+		
+		System.out.println(milkAmount[0]);
+		System.out.println(milkAmount[1]);
+		System.out.println(milkAmount[2]);
+		out.println(milkAmount[0]);
+		out.println(milkAmount[1]);
+		out.println(milkAmount[2]);
+		out.close();
+		
+	}
+}
